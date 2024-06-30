@@ -1,1 +1,5 @@
+## Filtering highest salary of each emmployee ##
+df = ms_employee_salary.groupby(['id','first_name','last_name','department_id'])['salary'].max()
 
+## creating dataframe and ordering by id ##
+df = df.reset_index().sort_values('id')
