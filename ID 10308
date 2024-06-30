@@ -1,1 +1,24 @@
+## Merging the tables ##
+df = pd.merge(
+    db_employee,
+    db_dept,
+    how = 'left',
+    left_on = ['department_id'],
+    right_on = ['id'])
 
+## Filtering engineering department ##
+df1 = df[df['department'] == 'engineering'] 
+
+## Filtering highest salary of engineering department and renaming ##
+df_eng = (df1.groupby('department') ['salary'].max().reset_index(name ='eng_salary'))
+
+## Filtering marketing department ##
+df2 = df[df['department'] == 'marketing']
+
+## Filtering highest salary of marketing department and renaming ##
+df_mkt = (df2.groupby('department')['salary'].max().reset_index(name = 'mkt_salary'))
+
+## Difference between the highest salary of both department ##
+result = pd.DataFrame(df_mkt['mkt_salary'] - df_eng['eng_salary'])
+result.columns = ['salary_difference']
+result
